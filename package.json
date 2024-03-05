@@ -1,0 +1,23 @@
+{
+  "name": "iqra-api",
+  "version": "1.0.0",
+  "description": "an api built on mp3Quran api with more organization and more functionality",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmedShehata98/iqra-quran-api.git"
+  },
+  "keywords": [
+    "quran",
+    "quran-api"
+  ],
+  "author": "ahmed shehata",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AhmedShehata98/iqra-quran-api/issues"
+  },
+  "homepage": "https://github.com/AhmedShehata98/iqra-quran-api#readme"
+}
