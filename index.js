@@ -6,7 +6,10 @@ const port = process.env.PORT || 3003;
 const recitersRoute = require("./routes/reciters.route");
 
 app.get("/", (_, res) =>
-  res.json({ message: " It's a mp3Quran and tvQuran based api" })
+  res.json({
+    message:
+      "hello 👋🏻, It's a quran listen API based on ( mp3Quran - tvQuran ) API's",
+  })
 );
 app.use(
   cors({
@@ -16,5 +19,5 @@ app.use(
 app.use("/reciters", recitersRoute);
 
 app.listen(port, () =>
-  console.log(`Express server listening on http://localhost:${port}`)
+  console.log(`🌐 API server is listening on port: ${port}`)
 );

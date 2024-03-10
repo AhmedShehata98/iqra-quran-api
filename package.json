@@ -4,8 +4,8 @@
   "description": "an api built on mp3Quran api with more organization and more functionality",
   "main": "index.js",
   "scripts": {
-        "start": "SET NODE_ENV=production&&node index.js",
-    "dev": "SET NODE_ENV=development&&nodemon index.js",
+    "start": "SET NODE_ENV=production&&node index.js",
+    "dev": "SET NODE_ENV=development&&nodemon index.js"
   },
   "repository": {
     "type": "git",
