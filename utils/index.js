@@ -33,7 +33,7 @@ function groupByLetter(dataSource = []) {
   return [...goruped];
 }
 function pagination({ page = 1, limit = 15, data = [] }) {
-  const skip = (page - 1) * limit;
+  const skip = page * limit;
   const paginated = data.slice(0, skip);
   return {
     data: data.slice(0, skip),
