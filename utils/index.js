@@ -32,4 +32,14 @@ function groupByLetter(dataSource = []) {
 
   return [...goruped];
 }
-module.exports = { getTargetSuwar, groupByLetter };
+function pagination({ page = 1, limit = 15, data = [] }) {
+  const skip = (page - 1) * limit;
+  const paginated = data.slice(0, skip);
+  return {
+    data: data.slice(0, skip),
+    hasNext: data.length !== paginated.length,
+    total: data.length,
+    length: paginated.length,
+  };
+}
+module.exports = { getTargetSuwar, groupByLetter, pagination };

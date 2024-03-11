@@ -1,18 +1,28 @@
 const mp3Quran = require("../models/mp3-quran");
 const recitersModel = require("../models/recitersModel");
 
-const { getTargetSuwar, groupByLetter } = require("../utils");
+const { getTargetSuwar, groupByLetter, pagination } = require("../utils");
 
 const getAllReciters = async (req, res) => {
+  const { page, limit } = req.query;
+
   try {
     const reciters = await recitersModel.getAllReciters();
-    res.json({
+    const { data, hasNext, length, total } = pagination({
+      page,
+      limit,
+      data: reciters,
+    });
+
+    return res.json({
       message: `gathered reciters data from file`,
-      reciters: groupByLetter(reciters),
-      length: reciters.length,
+      reciters: groupByLetter(data),
+      length,
+      total,
+      hasNext,
     });
   } catch (error) {
-    return res.json({ message: error.message }).status(400);
+    return res.status(400).json({ message: error.message });
   }
 };
 const getReciterById = async (req, res) => {
