@@ -5,7 +5,6 @@ const { getTargetSuwar, groupByLetter, pagination } = require("../utils");
 
 const getAllReciters = async (req, res) => {
   const { page, limit } = req.query;
-
   try {
     const reciters = await recitersModel.getAllReciters();
     const { data, hasNext, length, total } = pagination({

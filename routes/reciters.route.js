@@ -1,7 +1,7 @@
 const {
   getAllReciters,
   getReciterById,
-} = require("../controller/reciters.contriller");
+} = require("../controller/reciters.controller");
 
 const recitersRoute = require("express").Router();
 

@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 3003;
 const recitersRoute = require("./routes/reciters.route");
+const moshafRoute = require("./routes/moshafType.route");
 
 app.get("/", (_, res) =>
   res.json({
@@ -17,6 +18,7 @@ app.use(
   })
 );
 app.use("/reciters", recitersRoute);
+app.use("/moshaf", moshafRoute);
 
 app.listen(port, () =>
   console.log(`🌐 API server is listening on port: ${port}`)
