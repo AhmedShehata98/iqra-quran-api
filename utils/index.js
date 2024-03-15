@@ -42,4 +42,27 @@ function pagination({ page = 1, limit = 15, data = [] }) {
     length: paginated.length,
   };
 }
-module.exports = { getTargetSuwar, groupByLetter, pagination };
+function validateSchemaKeys(targetSchema, sourceSchema) {
+  const targetKeys = Array.isArray(targetSchema)
+    ? targetSchema
+    : Object.keys(targetSchema);
+  const sourceKeys = Array.isArray(sourceSchema)
+    ? sourceSchema
+    : Object.keys(sourceSchema);
+
+  for (const sKey in sourceKeys) {
+    for (const tKey in targetKeys) {
+      if (sKey !== tKey) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+}
+module.exports = {
+  getTargetSuwar,
+  groupByLetter,
+  pagination,
+  validateSchemaKeys,
+};

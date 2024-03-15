@@ -1,12 +1,12 @@
 const mp3Quran = require("../models/mp3-quran");
 const recitersModel = require("../models/recitersModel");
 
-const { getTargetSuwar, groupByLetter, pagination } = require("../utils");
+const { groupByLetter, pagination } = require("../utils");
 
 const getAllReciters = async (req, res) => {
   const { page, limit } = req.query;
   try {
-    const reciters = await recitersModel.getAllReciters();
+    const reciters = await recitersModel.findAllReciters();
     const { data, hasNext, length, total } = pagination({
       page,
       limit,
@@ -25,10 +25,15 @@ const getAllReciters = async (req, res) => {
   }
 };
 const getReciterById = async (req, res) => {
+  const { reciterId } = req.params;
   try {
-    const reciters = await recitersModel.getAllReciters();
-    const suwar = await mp3Quran.getAllSuwar({ lang: "ara" });
-    const reciter = reciters.find((reciter) => reciter.id === req.params.id);
+    if (reciterId === undefined)
+      res
+        .status(400)
+        .json({
+          message: `please provide a reciter id expected ( id ) but got ( ${reciterId} )`,
+        });
+    const reciter = await recitersModel.findReciterById(reciterId);
     res.json({
       message: `gathered reciter data successfully`,
       reciter: {
@@ -37,16 +42,39 @@ const getReciterById = async (req, res) => {
           ...reciter.moshaf.map((moshaf) => ({
             id: moshaf.id,
             name: moshaf.name,
-            server: moshaf.server,
-            surah_total: moshaf.surah_total,
-            suwar: getTargetSuwar(reciter.moshaf, suwar),
           })),
         },
       },
     });
   } catch (error) {
-    return res.json({ message: error.message }).status(error.code);
+    return res.status(400).json({ message: error.message });
   }
 };
+const addReciter = async (req, res) => {
+  try {
+    const reciter = req.body;
+    if (!Boolean(Object.keys(reciter).length))
+      return res
+        .status(404)
+        .json({ message: "reciter is required !!, please provide a data " });
+    const newReciter = await recitersModel.createReciter(reciter);
 
-module.exports = { getAllReciters, getReciterById };
+    return res.json({
+      message: " added a new reciter to file data successfully",
+      reciter: newReciter,
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message, reciter: {} });
+  }
+};
+const deleteReciter = async (req, res) => {
+  const { reciterId } = req.params;
+  if (reciterId === undefined)
+    return res.status(404).json({ message: "reciter id is required" });
+
+  const isDeleted = await recitersModel.deleteById(reciterId);
+  if (isDeleted)
+    return res.status(200).json({ message: "reciter deleted successfully" });
+};
+
+module.exports = { getAllReciters, getReciterById, addReciter, deleteReciter };
